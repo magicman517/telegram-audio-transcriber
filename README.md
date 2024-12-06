@@ -2,54 +2,93 @@
 
 This bot allows you to transcribe audio messages sent to a Telegram chat using the OpenAI's `whisper` model. The transcription is done using the Groq API.
 
-## Prerequisites
 
-- Telegram bot token from [BotFather](https://t.me/BotFather)
-- Groq API key from [GroqCloud](https://console.groq.com/keys)
+---
 
-## Installation
+## Requirements
 
-1. Clone the repository:
+Before you begin, make sure you have:
 
-    ```sh
-    git clone https://github.com/magicman517/telegram-audio-transcriber.git
-    cd telegram-audio-transcriber
-    ```
+1. A Telegram bot token from [BotFather](https://t.me/BotFather).
+2. A Groq API key from [GroqCloud](https://console.groq.com/keys).
 
-2. Create a virtual environment and activate it:
+---
+
+## Setup
+
+### 1. Clone the Repository
+
+```sh
+git clone https://github.com/magicman517/telegram-audio-transcriber.git
+cd telegram-audio-transcriber
+```
+
+### 2. Configure Environment Variables
+
+Create a `.env` file in the root directory and add the following keys:
+
+```env
+BOT_TOKEN=your-telegram-bot-token
+GROQ_API_KEY=your-groq-api-key
+```
+
+(Optional) Specify the transcription model. Default: `whisper-large-v3-turbo`. [Available models](https://console.groq.com/docs/models).
+
+```env
+GROQ_MODEL=whisper-large-v3-turbo
+```
+
+### 3. Install Dependencies
+
+### Option A: Using a Virtual Environment
+
+1. Create and activate a virtual environment:
 
     ```sh
     python -m venv .venv
-    source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
+    source .venv/bin/activate  # On Windows: `.venv\Scripts\activate`
     ```
 
-3. Install the required dependencies:
+2. Install required packages:
 
     ```sh
     pip install -r requirements.txt
     ```
 
-4. Create a `.env` file in the root directory and add your bot token and Groq API key:
+### Option B: Using Docker
 
-    ```env
-    BOT_TOKEN=your-telegram-bot-token
-    GROQ_API_KEY=your-groq-api-key
+1. Build the Docker image:
+
+    ```sh
+    docker build -t telegram-audio-transcriber .
     ```
 
-    Optionally, you can also specify the model to use for transcription. You can find a list of available models [here](https://console.groq.com/docs/models). Default is `whisper-large-v3-turbo`.
+---
 
-    ```env
-    GROQ_MODEL=whisper-large-v3-turbo
-    ```
+## Running the Bot
 
-## Usage
+### Option 1: Using Python
 
-1. Run the bot:
+1.  Start the bot:
 
     ```sh
     python main.py
     ```
 
-2. Send an audio message, voice message, or video note to your bot.
+### Option 2: Using Docker
 
-3. The bot will download the audio, transcribe it using the Groq API, and reply with the transcription.
+1.  Run the container:
+
+    ```sh
+    docker run --env-file .env telegram-audio-transcriber
+    ```
+
+2. Send an audio message, voice message, or video note to the bot.
+
+3. The bot will transcribe the audio and reply with the transcription.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
